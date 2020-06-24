@@ -74,14 +74,14 @@ public class ValidateFilter implements IRuleFilter {
 
             // must be list
             if (EnumOperator.IN.equals(rule.getOperator()) || EnumOperator.NOT_IN.equals(rule.getOperator())
-                    || EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
+                    || EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator()) || EnumOperator.ST_RELATE.equals(rule.getOperator())) {
                 // list
                 if (!(rule.getValue() instanceof List)) {
                     throw new FilterException("rule's value must be Array for:" + rule);
                 }
 
                 // size
-                if (EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
+                if (EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator()) || EnumOperator.ST_RELATE.equals(rule.getOperator())) {
                     List list = (List) rule.getValue();
                     if (list.size() != 2) {
                         throw new FilterException("rule's value size must be 2 for:" + rule);
