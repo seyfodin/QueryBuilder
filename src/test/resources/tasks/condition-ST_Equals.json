@@ -1,0 +1,15 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "geom",
+      "type": "string",
+      "input": "text",
+      "operator": "ST_Equals",
+      "value": "POINT (30 10)"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

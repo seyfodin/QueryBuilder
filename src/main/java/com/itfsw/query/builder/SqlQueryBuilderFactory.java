@@ -19,6 +19,7 @@ package com.itfsw.query.builder;
 import com.itfsw.query.builder.config.SqlQueryBuilderConfig;
 import com.itfsw.query.builder.support.builder.SqlBuilder;
 import com.itfsw.query.builder.support.filter.SqlInjectionAttackFilter;
+import com.itfsw.query.builder.support.model.enums.EnumDBType;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
 import com.itfsw.query.builder.support.parser.IRuleParser;
 import com.itfsw.query.builder.support.parser.sql.*;
@@ -72,6 +73,17 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
         ruleParsers.add(new IsNotEmptyRuleParser());
         ruleParsers.add(new IsNullRuleParser());
         ruleParsers.add(new IsNotNullRuleParser());
+        if(config.getDbType().equals(EnumDBType.POSTGIS)|| config.getDbType().equals(EnumDBType.SPATIALITE)) {
+            ruleParsers.add(new ST_CrossesRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_DisjointRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_EqualsRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_IntersectsRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_OverlapsRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_RelateRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_TouchesRuleParser(config.getDbType()));
+            ruleParsers.add(new ST_WithinRuleParser(config.getDbType()));
+        }
+
     }
 
     /**

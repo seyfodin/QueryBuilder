@@ -44,7 +44,20 @@ public enum EnumOperator {
     IS_EMPTY("is_empty"),
     IS_NOT_EMPTY("is_not_empty"),
     IS_NULL("is_null"),
-    IS_NOT_NULL("is_not_null");
+    IS_NOT_NULL("is_not_null"),
+    ST_EQUALS("ST_Equals"),
+    ST_DISJOINT("ST_Disjoint"),
+    ST_INTERSECTS("ST_Intersects"),
+    ST_TOUCHES("ST_Touches"),
+    ST_CROSSES("ST_Crosses"),
+    ST_WITHIN("ST_Within"),
+    ST_CONTAINS("ST_Contains"),
+    ST_OVERLAPS("ST_Overlaps"),
+    ST_RELATE("ST_Relate");
+
+
+
+
 
 
     private final String value;

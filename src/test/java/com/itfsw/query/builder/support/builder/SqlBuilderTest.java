@@ -17,7 +17,9 @@
 package com.itfsw.query.builder.support.builder;
 
 import com.itfsw.query.builder.SqlQueryBuilderFactory;
+import com.itfsw.query.builder.config.SqlQueryBuilderConfig;
 import com.itfsw.query.builder.other.FileHelper;
+import com.itfsw.query.builder.support.model.enums.EnumDBType;
 import com.itfsw.query.builder.support.model.result.SqlQueryResult;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -42,6 +44,36 @@ public class SqlBuilderTest {
         builder = factory.builder();
     }
 
+
+    /**
+     * ST_Equals 操作
+     */
+    @Test
+    public void testOperatorST_Equals() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-ST_Equals.json");
+
+        SqlQueryBuilderConfig config=new SqlQueryBuilderConfig();
+        config.setDbType(EnumDBType.SPATIALITE);
+        SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory(config);
+        SqlBuilder builder = factory.builder();
+
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("ST_Equals(geom, GeomFromEWKT(?)) = 1", result.getQuery());
+        Assert.assertEquals("POINT (30 10)", result.getParams().get(0));
+        Assert.assertEquals("ST_Equals(geom, GeomFromEWKT('POINT (30 10)')) = 1", result.getQuery(true));
+
+        config.setDbType(EnumDBType.POSTGIS);
+        factory = new SqlQueryBuilderFactory(config);
+        builder = factory.builder();
+
+        result = builder.build(json);
+
+        Assert.assertEquals("ST_Equals(geom, GeomFromEWKT(?))", result.getQuery());
+        Assert.assertEquals("POINT (30 10)", result.getParams().get(0));
+        Assert.assertEquals("ST_Equals(geom, GeomFromEWKT('POINT (30 10)'))", result.getQuery(true));
+    }
+
     /**
      * equal 操作
      */
@@ -54,6 +86,7 @@ public class SqlBuilderTest {
         Assert.assertEquals("Mistic", result.getParams().get(0));
         Assert.assertEquals("username = 'Mistic'", result.getQuery(true));
     }
+
 
     /**
      * not equal 操作

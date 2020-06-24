@@ -63,6 +63,14 @@ public class SqlInjectionAttackFilter implements IRuleFilter {
             this.beginningDelimiter = '[';
             this.endingDelimiter = ']';
             file = "keywords-ms-sql.txt";
+        } else if (EnumDBType.POSTGIS.equals(dbType)) {
+            this.beginningDelimiter = '`';
+            this.endingDelimiter = '`';
+            file = "keywords-mysql.txt";
+        } else if (EnumDBType.SPATIALITE.equals(dbType)) {
+            this.beginningDelimiter = '`';
+            this.endingDelimiter = '`';
+            file = "keywords-mysql.txt";
         } else {
             // TODO not supports now
             throw new FilterAddException("Sorry not supports now");
